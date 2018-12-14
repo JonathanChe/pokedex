@@ -1,8 +1,9 @@
-export const SELECTED_POKEMON = 'SELECTED_POKEMON';
+import * as ActionTypes from '../constants/constants';
 
 export function selectedPokemon(pokemon) {
   return {
-    type: SELECTED_POKEMON,
+    type: ActionTypes.SELECTED_POKEMON,
     payload: pokemon,
   };
 }
+

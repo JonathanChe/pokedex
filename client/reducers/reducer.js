@@ -1,4 +1,4 @@
-import * as ActionTypes from './action';
+import * as ActionTypes from '../actions/actions';
 
 const initialState = {
   selectedPokemon: '',
