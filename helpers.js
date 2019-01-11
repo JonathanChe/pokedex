@@ -1,13 +1,10 @@
-const flattenArray = (arr) => {
-  let flat = [];
-  for (let i = 0; i < arr.length; i += 1) {
-    if (Array.isArray(arr[i])) {
-      flat = flat.concat(flattenArray(arr[i]));
-    } else {
-      flat = flat.concat(arr[i]);
-    }
+function findMatches(wordToMatch, pokemons) {
+  if (pokemons.length !== 0) {
+    return pokemons.filter(pokemon => {
+      const regex = new RegExp(wordToMatch, 'gi');
+      return pokemon.name.match(regex);
+    });
   }
-  return flat;
-};
+}
 
-export default flattenArray;
+export default findMatches;
