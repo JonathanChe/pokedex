@@ -22,11 +22,10 @@ function pokemonReducer(state = initialState, action) {
         show: !state.show,
       };
     case actionTypes.MATCHED_POKEMON:
-      const filtered = findMatches(action.payload, state.allPokemons);
       return {
         ...state,
-        matchedPokemons: filtered,
-      }
+        matchedPokemons: findMatches(action.payload, state.allPokemons),
+      };
     case actionTypes.DISPLAY_POKEMON:
       return {
         ...state,
@@ -36,7 +35,7 @@ function pokemonReducer(state = initialState, action) {
       return {
         ...state,
         show: false,
-      }
+      };
     default:
       return state;
   }
@@ -44,6 +43,6 @@ function pokemonReducer(state = initialState, action) {
 
 const rootReducer = combineReducers({
   pokemonReducer,
-})
+});
 
 export default rootReducer;
