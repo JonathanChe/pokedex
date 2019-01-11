@@ -2,7 +2,7 @@ import * as ActionTypes from '../client/constants/constants';
 import { selectedPokemon } from '../client/actions/actions';
 
 describe('action objects', () => {
-  it('should create an action to select a pokemon', () => {
+  xit('should create an action to select a pokemon', () => {
     const pokemon = 'bulbasaur';
     const expectedAction = {
       type: ActionTypes.SELECTED_POKEMON,
