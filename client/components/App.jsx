@@ -1,82 +1,36 @@
-// npm installs
 import React, { Component } from 'react';
-import View from './View';
+import { connect } from 'react-redux';
+import * as actions from '../actions';
 
-// rel path imports
-import NavBar from './NavBar';
-import PokemonDetails from './PokemonDetails';
+import Search from './Search';
+import '../styles/App.css';
+import Pokemon from './Pokemon';
+
+const mapStateToProps = state => ({
+  show: state.pokemonReducer.show
+})
+
+const mapDispatchToProps = dispatch => ({
+  fetchPokemons: (pokemon) => dispatch(actions.allPokemons(pokemon)),
+});
 
 class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      numberOfPokemon: 0,
-      pokemonList: [],
-      showDetailsWindow: false,
-      pokemonDetailsUrl: '',
-      pokemonName: '',
-    };
 
-    // binding the context of 'this'
-    this.showDetailsWindow = this.showDetailsWindow.bind(this);
-    this.exitDetails = this.exitDetails.bind(this);
-  }
-
-  componentDidMount() {
-    fetch('https://pokeapi.co/api/v2/pokemon/')
-      .then(res => res.json())
-      .then((response) => {
-        const { count, results } = response;
-        this.setState({
-          numberOfPokemon: count,
-          pokemonList: results,
-      })
-      .catch(err => console.error('Error fetching data ', err));
-    });
-  }
-
-  showDetailsWindow(e, url) {
-    const { name } = e.target;
-    this.setState({
-      showDetailsWindow: true,
-      pokemonName: name,
-      pokemonDetailsUrl: url,
-    });
-  }
-
-  exitDetails() {
-    this.setState({ showDetailsWindow: false });
+  componentDidMount = async () => {
+    const pokemon = await fetch('https://pokeapi.co/api/v2/pokemon')
+      .then(data => data.json())
+      .then(response => response.results);
+    this.props.fetchPokemons(pokemon);
   }
 
   render() {
-    const {
-      pokemonList,
-      numberOfPokemon,
-      pokemonDetailsUrl,
-      pokemonName,
-      showDetailsWindow,
-    } = this.state;
-
     return (
       <div>
-        <NavBar count={numberOfPokemon} />
-        {showDetailsWindow
-          ? (
-            <PokemonDetails
-              name={pokemonName}
-              url={pokemonDetailsUrl}
-              exitDetails={this.exitDetails}
-            />)
-          : (
-            <View
-              pokemonList={pokemonList}
-              showDetailsWindow={this.showDetailsWindow}
-              showPokemons={this.showPokemons}
-            />)
-        }
+        <Search />
+        {this.props.show && <Pokemon />}
       </div>
     );
   }
 }
 
-export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(App);

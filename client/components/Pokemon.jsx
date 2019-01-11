@@ -1,36 +1,36 @@
-// npm imports
 import React from 'react';
-import styled from 'styled-components';
+import { connect } from 'react-redux';
 
-const PokemonStyles = styled.button`
-  height: 200px;
-  width: 200px;
-  margin: 5px;
-  float: left;
-  font-size: 16px;
-  border: 1px solid red;
-  background-color: #FFC40E;
-  text-align: center;
-  line-height: 100px;
-  cursor: pointer;
-  :focus {
-    outline: none;
-  };
-  :hover {
-    background-color: yellow;
+const mapStateToProps = state => ({
+  pokemon: state.pokemonReducer.displayPokemon,
+})
+
+const Pokemon = props => {
+  const { pokemon } = props;
+
+  let pokemonDetails;
+
+  if (pokemon.name) {
+    const { id, base_experience, height, name, weight } = pokemon;
+    pokemonDetails = { id, base_experience, height, name, weight };
+  } else {
+    pokemonDetails = 'Loading...'
   }
-`;
 
-const Pokemon = (props) => {
-  const { showDetailsWindow, pokemon: { name, url } } = props;
   return (
-    <PokemonStyles
-      name={name}
-      onClick={(e) => showDetailsWindow(e, url)}
-    >
-      {name}
-    </PokemonStyles>
-  );
-};
+    <div className="pokemon">
+      {pokemonDetails !== 'Loading...'
+        ? <>
+            <h4>Name: {(pokemonDetails.name).toUpperCase()} </h4>
+            <div>id: {pokemonDetails.id}</div>
+            <div>base_experience: {pokemonDetails.base_experience}</div>
+            <div>height: {pokemonDetails.height}</div>
+            <div>weight: {pokemonDetails.weight}</div>
+          </>
+        : pokemonDetails
+      }
+    </div>
+  )
+}
 
-export default Pokemon;
+export default connect(mapStateToProps, null)(Pokemon);
