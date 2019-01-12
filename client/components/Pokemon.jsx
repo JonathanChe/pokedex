@@ -21,7 +21,7 @@ const Pokemon = props => {
     <div className="pokemon">
       {pokemonDetails !== 'Loading...'
         ? <>
-            <h4>Name: {(pokemonDetails.name).toUpperCase()} </h4>
+            <h3>Name: {(pokemonDetails.name).toUpperCase()} </h3>
             <div>id: {pokemonDetails.id}</div>
             <div>base_experience: {pokemonDetails.base_experience}</div>
             <div>height: {pokemonDetails.height}</div>
