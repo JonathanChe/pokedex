@@ -27,6 +27,7 @@ class App extends Component {
   render() {
     return (
       <div>
+        <h1 id="title">Pokedex</h1>
         <Search />
         {this.props.show && <Pokemon />}
       </div>
